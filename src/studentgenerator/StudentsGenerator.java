@@ -6,9 +6,10 @@
 package studentgenerator;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 import model.MoneyBr;
 import model.Student;
-import mysearchjavafx.FileWork;
+import mysearchjavafx.StudentsFile;
 import model.Parent;
 
 /**
@@ -92,15 +93,18 @@ public class StudentsGenerator {
      */
     public static void main(String[] args){
         StudentsGenerator generator = new StudentsGenerator();
-        ArrayList<Student> studentsArray = generator.makeNewStudentsArray();
+        System.out.println("Please, input number of new students: ");
+        Scanner input = new Scanner(System.in);
+        int numberOfStudents = input.nextInt();
+        ArrayList<Student> studentsArray = generator.makeNewStudentsArray(numberOfStudents);
         String path = "stud_s.xml";
-        FileWork parserDOM = new FileWork(path); // + "students.xml"
+        StudentsFile parserDOM = new StudentsFile(path); // + "students.xml"
         parserDOM.saveDocument(studentsArray, path);
     }
     
-    private ArrayList<Student> makeNewStudentsArray(){
+    private ArrayList<Student> makeNewStudentsArray(int numberOfStudents){
         ArrayList<Student> studentsArray = new ArrayList();
-        for(int iter = 0; iter < 100; iter++){
+        for(int iter = 0; iter < numberOfStudents; iter++){
             int sex = (int)(Math.random() * 2);
             int numberOfManFirstNames = manFirstNamesArray.size();
             int numberOfManSurnames = manSurnamesArray.size();
@@ -143,7 +147,7 @@ public class StudentsGenerator {
             String fatherFirstName = manFirstNamesArray.get(firstNameRandomNumber);
             String fatherSurname = manSurnamesArray.get(surnameRandomNumber);
             String fatherLastName = manLastNamesArray.get(lastNameRandomNumber);
-            int fatherRubles = Integer.parseInt(rublesArray.get(rublesRandomNumber)); //ошибка?
+            int fatherRubles = Integer.parseInt(rublesArray.get(rublesRandomNumber));
             int fatherPenny = Integer.parseInt(pennyArray.get(pennyRandomNumber));
             MoneyBr fSalary = new MoneyBr(fatherRubles,fatherPenny);
             
